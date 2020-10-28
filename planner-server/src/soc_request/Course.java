@@ -41,22 +41,3 @@ public class Course {
 //	
 //	}
 }
-
-//public class Course {
-//	String prefix;
-//	Integer number;
-//	Section[] SectionData;
-//	String title;
-//	
-//	Boolean has_lecture;
-//	Boolean has_lab;
-//	Boolean has_discussion;
-//	
-//	Boolean is_full;
-//	Integer lecture_capacity;
-//	Integer lecture_registered;
-//	Integer lab_capacity = 0;
-//	Integer lab_registered = 0;
-//	Integer discussion_capacity = 0
-//	Integer discussion_registered = 0
-//}

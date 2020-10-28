@@ -14,6 +14,25 @@ import soc_deserializers.DepartmentDeserializer;
 public class SOC_API{
 	static final String soc_request_URL = "https://web-app.usc.edu/web/soc/api/classes";
 	
+	/*
+	 * Returns the queried section if it exists in that course that semester, otherwise null.
+	 * Throws: IOException if course id is incorrectly formatted
+	 */
+	public static Section get_section(String course_id, int section_id, int semester_id) throws IOException {
+		Course c = get_course(course_id, section_id);
+		
+		for(Section s : c.sections) {
+			if(s.id == section_id) {
+				return s;
+			}
+		}
+		return null;
+	}
+	
+	/*
+	 * Returns the queried course if it exists in that course that semester, otherwise null.
+	 * Throws: IOException if course id is incorrectly formatted 
+	 */
 	public static Course get_course(String course_id, int semester_id) throws IOException {
 		//split the course prefix and number
 		String[] course_info = course_id.split("-");
@@ -36,7 +55,12 @@ public class SOC_API{
 		
 		return null;
 	}
-		
+	
+	/*
+	 * Returns the queried department for the given semester, or null if it doesn't exist
+	 * Throws: IOException if an exception occurs while querying the SOC database 
+	 */
+
 	public static Department get_department(String department_id, int semester_id) throws IOException {
 		URL soc_request = new URL(String.format("%s/%s/%d", soc_request_URL, department_id, semester_id));
 		HttpURLConnection con = (HttpURLConnection) soc_request.openConnection();
@@ -61,8 +85,17 @@ public class SOC_API{
 		}
 	}
 	
+	/*
+	 * Returns the courses in the queried department for the given semester, or null if it doesn't exist
+	 * Throws: IOException if an exception occurs while querying the SOC database 
+	 */
 	private static Course[] get_department_courses(String department_id, int semester_id) throws IOException {
-		return get_department(department_id, semester_id).courses;
+		Department d = get_department(department_id, semester_id);
+		
+		if(d != null) {
+			return d.courses;
+		}
+		return null;
 	}
 }
 
