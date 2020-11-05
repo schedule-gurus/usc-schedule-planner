@@ -16,7 +16,7 @@ public class Instructor {
 	public String last_name;
 	public double rmp;
 	
-	public double getRMP() throws IOException {
+	public double get_rmp() throws IOException {
 		final String rmp_request_URL = "";
 		URL rmp_request = new URL(rmp_request_URL);
 		HttpURLConnection con = (HttpURLConnection) rmp_request.openConnection();

@@ -39,6 +39,11 @@ public class DepartmentDeserializer implements JsonDeserializer<Department>{
 			dep.courses[0] = gson.fromJson(courses.get("course"), Course.class);
 		}
 		
+		//initialize helper variables for the course
+		for(Course c : dep.courses) {
+			c.prepare();
+		}
+		
 		return dep;
 	}
 

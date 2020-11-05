@@ -1,10 +1,10 @@
-package soc_tests;
+package schedule_planner_tests;
 
 import java.io.IOException;
 
 import soc_request.*;
 
-public class DeserializationTest {
+public class SOC_Test {
 	public static void main(String[] args) throws IOException {
 		
 		//check get_department
