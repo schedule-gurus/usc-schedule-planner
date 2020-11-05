@@ -15,11 +15,12 @@ public class SOC_API{
 	static final String soc_request_URL = "https://web-app.usc.edu/web/soc/api/classes";
 	
 	/*
-	 * Returns the queried section if it exists in that course that semester, otherwise null.
+	 * Input: String course_id, int section_id, int semester_id
+	 * Return: the queried section if it exists in that course that semester, otherwise null.
 	 * Throws: IOException if course id is incorrectly formatted
 	 */
 	public static Section get_section(String course_id, int section_id, int semester_id) throws IOException {
-		Course c = get_course(course_id, section_id);
+		Course c = get_course(course_id, semester_id);
 		
 		for(Section s : c.sections) {
 			if(s.id == section_id) {
@@ -30,7 +31,8 @@ public class SOC_API{
 	}
 	
 	/*
-	 * Returns the queried course if it exists in that course that semester, otherwise null.
+	 * Input: String course_id, int semester_id
+	 * Return: the queried course if it exists in that course that semester, otherwise null.
 	 * Throws: IOException if course id is incorrectly formatted 
 	 */
 	public static Course get_course(String course_id, int semester_id) throws IOException {
@@ -57,7 +59,8 @@ public class SOC_API{
 	}
 	
 	/*
-	 * Returns the queried department for the given semester, or null if it doesn't exist
+	 * Input: String department_id, int semester_id
+	 * Return: the queried department for the given semester, or null if it doesn't exist
 	 * Throws: IOException if an exception occurs while querying the SOC database 
 	 */
 
@@ -86,7 +89,8 @@ public class SOC_API{
 	}
 	
 	/*
-	 * Returns the courses in the queried department for the given semester, or null if it doesn't exist
+	 * Input: String department_id, int semester_id
+	 * Return: the courses in the queried department for the given semester, or null if it doesn't exist
 	 * Throws: IOException if an exception occurs while querying the SOC database 
 	 */
 	private static Course[] get_department_courses(String department_id, int semester_id) throws IOException {

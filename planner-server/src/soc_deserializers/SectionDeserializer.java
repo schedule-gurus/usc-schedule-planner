@@ -48,7 +48,7 @@ public class SectionDeserializer implements JsonDeserializer<Section> {
 		//handles edge case of missing locations
 		if(!sdata.get("location").isJsonObject()) {
 			if(sdata.get("location").isJsonArray()) {
-				s.location = sdata.get("location").getAsJsonArray().get(0).getAsString();
+				s.location = sdata.get("location").getAsJsonArray().get(0).toString();
 			}
 			else {
 				s.location = sdata.get("location").getAsString();
