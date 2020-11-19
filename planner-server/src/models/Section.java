@@ -1,4 +1,4 @@
-package soc_request;
+package models;
 
 public class Section {
 	public Integer id;
@@ -11,8 +11,8 @@ public class Section {
 	public Integer registered;
 	
 	public String day;
-	public String start_time;
-	public String end_time;
+	public Integer start_time;
+	public Integer end_time;
 	public String location;
 	
 	public Instructor[] instructors;	

@@ -9,8 +9,9 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import soc_request.Course;
-import soc_request.Section;
+
+import models.Course;
+import models.Section;
 
 public class CourseDeserializer implements JsonDeserializer<Course>{
 private Gson gson;

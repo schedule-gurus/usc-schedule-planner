@@ -3,20 +3,21 @@ package soc_deserializers;
 import java.lang.reflect.Type;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
-import soc_request.Instructor;
-import soc_request.Section;
+import models.Instructor;
+import models.Section;
 
 public class SectionDeserializer implements JsonDeserializer<Section> {
 	private Gson gson;
 	
 	public SectionDeserializer() {
-		gson = new Gson();
+		gson = new GsonBuilder().registerTypeAdapter(Instructor.class, new InstructorDeserializer()).create();
 	}
 	
 	public Section deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
@@ -36,13 +37,13 @@ public class SectionDeserializer implements JsonDeserializer<Section> {
 		//handles an edge case of duplicate times and days + missing days
 		if(sdata.get("day").isJsonArray()) {
 			s.day = sdata.get("day").getAsJsonArray().get(0).getAsString();
-			s.start_time = sdata.get("start_time").getAsJsonArray().get(0).getAsString();
-			s.end_time = sdata.get("end_time").getAsJsonArray().get(0).getAsString();
+			s.start_time = timeStringToInt(sdata.get("start_time").getAsJsonArray().get(0).getAsString());
+			s.end_time = timeStringToInt(sdata.get("end_time").getAsJsonArray().get(0).getAsString());
 		}
 		else if(!sdata.get("day").isJsonObject()){
 			s.day = sdata.get("day").getAsString();
-			s.start_time = sdata.get("start_time").getAsString();
-			s.end_time = sdata.get("end_time").getAsString();
+			s.start_time = timeStringToInt(sdata.get("start_time").getAsString());
+			s.end_time = timeStringToInt(sdata.get("end_time").getAsString());
 		}
 		
 		//handles edge case of missing locations
@@ -69,4 +70,18 @@ public class SectionDeserializer implements JsonDeserializer<Section> {
 		
 		return s;		
 	}
+	
+	//helper function to convert 15:00 time string into 1500 Integer
+	private Integer timeStringToInt(String time) {
+		
+		if(time.equals("TBA")) {
+			return -1;
+		}
+		
+		String[] t = time.split(":");
+		Integer hours = Integer.parseInt(t[0]) * 100;
+		Integer minutes = Integer.parseInt(t[1]);
+		return hours + minutes;
+	}
+	
 }

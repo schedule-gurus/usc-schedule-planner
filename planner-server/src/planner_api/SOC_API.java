@@ -1,4 +1,4 @@
-package soc_request;
+package planner_api;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,6 +9,7 @@ import java.net.URL;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import models.*;
 import soc_deserializers.DepartmentDeserializer;
 
 public class SOC_API{

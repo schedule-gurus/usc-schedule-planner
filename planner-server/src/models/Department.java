@@ -1,4 +1,4 @@
-package soc_request;
+package models;
 
 import com.google.gson.annotations.SerializedName;
 

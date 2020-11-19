@@ -10,8 +10,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
-import soc_request.Course;
-import soc_request.Department;
+import models.Course;
+import models.Department;
 
 public class DepartmentDeserializer implements JsonDeserializer<Department>{
 	private Gson gson;
