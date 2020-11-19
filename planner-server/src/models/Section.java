@@ -1,5 +1,7 @@
 package models;
 
+import metrics.RMP;
+
 public class Section {
 	public Integer id;
 	public Integer session; //what semester the class is held
@@ -16,4 +18,8 @@ public class Section {
 	public String location;
 	
 	public Instructor[] instructors;	
+	
+	public String toString() {
+		return title + " " + start_time+"-"+end_time + " " + location + " " + type + " " + day + " " + units;
+	}
 }
