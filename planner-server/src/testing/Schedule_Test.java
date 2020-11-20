@@ -13,7 +13,7 @@ public class Schedule_Test {
 	
     public void normalrun() throws Exception {
     	int sem_id = 20203;
-        String[] courseStrings = {"csci-201", "ee-109", "csci-270"};
+        String[] courseStrings = {"csci-201", "ee-109", "csci-270", "hist-250"};
         Course[] courses = new Course[courseStrings.length];
         
         for(int i = 0; i < courseStrings.length; i++) {
@@ -21,7 +21,7 @@ public class Schedule_Test {
         }
 
         Scheduler s = new Scheduler();
-        s.buildSchedules(courses, 5);
+        s.buildSchedules(courses, 10);
 //
         System.out.println(s.printSchedules());
 

@@ -1,5 +1,7 @@
 package models;
 
+import com.google.gson.annotations.SerializedName;
+
 import metrics.RMP;
 
 public class Section {
@@ -17,9 +19,12 @@ public class Section {
 	public Integer end_time;
 	public String location;
 	
-	public Instructor[] instructors;	
+	public Instructor[] instructors;
+	
+	//parameters defined at runtime
+	public String course_name;
 	
 	public String toString() {
-		return title + " " + start_time+"-"+end_time + " " + location + " " + type + " " + day + " " + units;
+		return course_name + " " + start_time+"-"+end_time + " " + location + " " + type + " " + day + " " + units;
 	}
 }

@@ -43,6 +43,11 @@ private Gson gson;
 			c.sections[0] = gson.fromJson(cData.get("SectionData"), Section.class);
 		}
 		
+		//update section objects with course name
+		for(Section s : c.sections) {
+			s.course_name = c.department + "-" + c.id;
+		}
+		
 		return c;		
 	}
 }
