@@ -48,34 +48,6 @@ public class Binaryizer {
 
     }
 
-    public BitSet dayBinaryizer(int startTime, int endTime){
-        BitSet temp = new BitSet(30);
-
-        //Step 1: Get the Start and End positions of in BitSet form
-        //subtract 700 (start time) and divide 30 to get starting position of bin
-        int binStart = binFinder(startTime);
-        //Bitset position end
-        int binEnd = binFinder(endTime);
-
-        //Step 2: Turn everything between binEnd and binStart to positive bits
-        temp.set(binStart, binEnd);
-
-        return temp;
-    }
-    
-    public String printBitSet(){
-//        StringBuilder sb = new StringBuilder();
-//        for (int i = 0 ; b.length > i; i++){
-//            String s1 = String.format("%8s", Integer.toBinaryString(b[i] & 0xFF)).replace(' ', '0');
-//            sb.append(s1);
-//        }
-//        String s1 = String.format("%8s", Integer.toBinaryString(b[1] & 0xFF)).replace(' ', '0');
-
-//        byte bb = (byte) 15;
-//        temp.set(31);
-    	return output.toString();
-    }
-    
     public int binFinder(int inputTime){
     	
         int startTime = 700;

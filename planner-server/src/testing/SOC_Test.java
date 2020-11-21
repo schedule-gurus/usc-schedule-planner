@@ -1,6 +1,8 @@
 package testing;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import metrics.*;
 import models.*;
@@ -55,7 +57,7 @@ public class SOC_Test {
 		
 		//check Distance API assuming your schedule is given by c1's sections
 		ClassDistance.initCoordinates("building_coordinates.txt");
-		System.out.println("The distance for this schedule is " + ClassDistance.computeDistance(c1.sections) + " miles.");
+		System.out.println("The distance for this schedule is " + ClassDistance.computeDistance(Arrays.asList(c1.sections)) + " miles.");
 		System.out.println();
 	}
 	

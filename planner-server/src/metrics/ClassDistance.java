@@ -1,8 +1,10 @@
 package metrics;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.byteowls.jopencage.JOpenCageGeocoder;
@@ -39,21 +41,26 @@ public class ClassDistance {
 	private static Comparator<Section> comp = new sectionComp();
 	
 	//returns the distance between each day's classes in miles given a list of Sections (a schedule)
-	public static double computeDistance(Section[] sections) {
-		Arrays.sort(sections, comp);
+	public static double computeDistance(List<Section> sections) {
+		Collections.sort(sections, comp);
 		double[] distances = new double[5];
 		String[] prev = new String[5];
 		String[] days = {"M", "T", "W", "H", "F"};
 		
 		for(int d = 0; d < days.length; d++) {
-			for(int s = 0; s < sections.length; s++) {
-				if(sections[s].day.contains(days[d])) {
+			for(int s = 0; s < sections.size(); s++) {
+				if(sections.get(s).day.contains(days[d])) {
+					
+					//ONLINE doesn't have a location, so ignore for distance
+					if(sections.get(s).location.equals("ONLINE")) {
+						continue;
+					}
 					
 					if(prev[d] == null) {
-						prev[d] = locationSplit(sections[s].location)[0];
+						prev[d] = locationSplit(sections.get(s).location)[0];
 					}
 					else {
-						String curr = locationSplit(sections[s].location)[0];
+						String curr = locationSplit(sections.get(s).location)[0];
 						distances[d] += haversine(prev[d], curr);
 						prev[d] = curr;
 					}

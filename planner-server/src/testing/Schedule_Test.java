@@ -6,12 +6,27 @@ import server.Scheduler;
 
 public class Schedule_Test {
 	public Schedule_Test() throws Exception {
-        normalrun();
-//        coupleCollisions();
-//        noPossibleSchedule();
+		bestSchedule();
+//		allPossibleSchedules();
+//      coupleCollisions();
+//      noPossibleSchedule();
     }
 	
-    public void normalrun() throws Exception {
+	 public void bestSchedule() throws Exception {
+	    	int sem_id = 20203;
+	        String[] courseStrings = {"csci-201", "ee-109", "csci-270", "hist-250"};
+	        Course[] courses = new Course[courseStrings.length];
+	        
+	        for(int i = 0; i < courseStrings.length; i++) {
+	        	courses[i] = SOC_API.get_course(courseStrings[i], sem_id);
+	        }
+
+	        Scheduler s = new Scheduler();
+	        System.out.println(s.buildBestSchedule(courses, 10, true));
+
+	    }
+	
+    public void allPossibleSchedules() throws Exception {
     	int sem_id = 20203;
         String[] courseStrings = {"csci-201", "ee-109", "csci-270", "hist-250"};
         Course[] courses = new Course[courseStrings.length];
@@ -21,8 +36,8 @@ public class Schedule_Test {
         }
 
         Scheduler s = new Scheduler();
-        s.buildSchedules(courses, 10);
-//
+        s.buildValidSchedules(courses);
+
         System.out.println(s.printSchedules());
 
     }
