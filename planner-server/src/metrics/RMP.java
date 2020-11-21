@@ -9,10 +9,28 @@ import java.net.ProtocolException;
 import java.net.URL;
 
 import models.Instructor;
+import models.Section;
 
 public class RMP {
 	
 	private static String rmp_request_URL = "https://usc-rmp-api.herokuapp.com";
+	
+	/*
+	 * Input: Section[]
+	 * Output: avg rmp score
+	 */
+	public static double computeAvgRMP(Section[] sections) {
+		int sum = 0;
+		int num_instructors = 0;
+		for(Section s : sections) {
+			for(Instructor i : s.instructors) {
+				sum += get_rmp(i);
+				num_instructors++;		
+			}
+		}
+		
+		return (double)sum / num_instructors;
+	}
 	
 	/*
 	 * Input: Instructor object

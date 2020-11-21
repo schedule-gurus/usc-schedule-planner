@@ -8,64 +8,70 @@ import java.util.concurrent.ThreadLocalRandom;
 import exceptions.CollisionException;
 import models.Binaryizer;
 import models.Course;
+import models.Schedule;
 import models.Section;
 
 import java.util.BitSet;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Scheduler {
 
-
     private List<BitSet> schedules ;
     private List<List<Section>> successfulSchedules;                //0700->2200, M-F, 30 minute bins = 150 bins to represent the whole week
-    private int iterations;
-    final int MAX_ITERATIONS = Integer.MAX_VALUE; 								//Max number of times the alg will try to find a schedule
 
+    //Input
+    public Schedule buildBestSchedule(Course[] courses, int schedulesDesired, boolean metric) throws Exception{
+    	List<Schedule> validSchedules = buildValidSchedules(courses, schedulesDesired);
+    	
+    	//sort so that metric is either  
+    	if(metric) {
+    		Collections.sort(validSchedules, new RMPComp());
+    	}
+    	else {
+    		Collections.sort(validSchedules, new DistComp());
+    	}
+    	
+    	return validSchedules.get(0);
+    }
     
-    public List<List<Section>> buildSchedules(Course[] courses, int schedulesDesired) throws Exception {
+    //Schedule Comparators
+    public class RMPComp implements Comparator<Schedule>{
+		@Override
+		public int compare(Schedule s1, Schedule s2) {
+			return (int)(s2.avg_rmp - s1.avg_rmp);
+		}
+    	
+    }
+    
+    public class DistComp implements Comparator<Schedule>{
+		@Override
+		public int compare(Schedule s1, Schedule s2) {
+			return (int)(s2.distance - s1.distance);
+		}
+    	
+    }
+    
+    //build a list of valid schedules
+    public List<Schedule> buildValidSchedules(Course[] courses, int schedulesDesired) throws Exception {
         //INPUT: LIST OF COURSE OBJECTS
     	//OUTPUT: List of possible schedules in bitset format
     	schedules = new ArrayList<>();
         successfulSchedules = new ArrayList<List<Section>>();
-        iterations = 0;
-    	
-//    	List<Section>[][][] comboLLD;
-//    	List<Section>[][] comboLL;
-//    	List<Section>[][] comboLD;
-//    	List<Section>[] comboL;
     	
         List<List<List<Section>>> courseList =  new ArrayList<List<List<Section>>>(); 
-        
         for (int i = 0; courses.length > i; i++){
-        	
         	courseList.add(computeCourseSections(courses, i));
-        	
-//        	//randomly grabbing sections in the class-type lists and adding it to sectionList
-//        	if(lectures.size() > 0) {
-//                sectionList.add(lectures.get(
-//	                ThreadLocalRandom.current()
-//	                .nextInt(lectures.size()) % lectures.size()
-//                ));
-//        	}
-//        	if(labs.size() > 0) {
-//                sectionList.add(labs.get(
-//	                ThreadLocalRandom.current()
-//	                .nextInt(labs.size()) % labs.size()
-//                ));
-//        	}
-//        	if(discussions.size() > 0) {
-//                sectionList.add(discussions.get(
-//	                ThreadLocalRandom.current()
-//	                .nextInt(discussions.size()) % discussions.size()
-//                ));
-//        	}
-//        	if(quiz != null) {
-//                sectionList.add(quiz);
-//        	}
         }
-        
-        computeSuccessfulSchedules(courseList, courses.length-1, new ArrayList<Section>(), 5);
+        computeSuccessfulSchedules(courseList, courses.length-1, new ArrayList<Section>(), schedulesDesired);
     	
-        return successfulSchedules;
+        
+        List<Schedule> finalSchedules = new ArrayList<Schedule>();
+    	for(List<Section> l : successfulSchedules) {
+    		finalSchedules.add(new Schedule( (Section[])l.toArray() ));
+    	}
+        
+        return finalSchedules;
     }
     
     private List<List<Section>> computeCourseSections(Course[] courses, int i) throws CollisionException{
@@ -291,7 +297,7 @@ public class Scheduler {
 
         //Is there a collision?
         if (tempBits != sectionBits+scheduleBits){
-            throw new CollisionException(iterations + ": COLLISION for class " + classtoAdd.course_name + " " + classtoAdd.type + " " + classtoAdd.start_time + ":" + classtoAdd.end_time);
+            throw new CollisionException("COLLISION for class " + classtoAdd.course_name + " " + classtoAdd.type + " " + classtoAdd.start_time + ":" + classtoAdd.end_time);
             //COLLISION there is a conflict in the course time with the schedule you have.
             //Break the whole thing and swap this current SessionID with a different one sequence.
             //Go back to the specific course list you collided with and grab a different one
@@ -314,9 +320,6 @@ public class Scheduler {
 
     public String printSchedules(){
         StringBuilder sb = new StringBuilder();
-//        for (int i = 0; schedules.size() > i; i++){
-//            sb.append("Schedule " + i + "\n" + schedules.get(i).toString() + "\n\n");
-//        }
         for (int j = 0 ; successfulSchedules.size() > j; j++){
             sb.append("Schedule " + j + ": " + successfulSchedules.get(j).toString() + "\n");
         }
