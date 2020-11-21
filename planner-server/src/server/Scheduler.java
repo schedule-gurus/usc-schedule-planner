@@ -18,7 +18,7 @@ public class Scheduler {
     private List<BitSet> schedules ;
     private List<List<Section>> successfulSchedules;                //0700->2200, M-F, 10 minute bins = 450 bins to represent the whole week
 
-    //Input: Courses wanted and metric to optimize for.
+    //Input: Courses wanted, number of schedules to compute RMP and DIST for, and metric to optimize.
     //Output: The best Schedule for the given metric.
     public Schedule buildBestSchedule(Course[] courses, int schedulesDesired, boolean metric) throws Exception{
     	
