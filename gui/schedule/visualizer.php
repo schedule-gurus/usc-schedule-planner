@@ -69,8 +69,11 @@ if ( !isset($_SESSION['logged_in']) || !$_SESSION['logged_in'] ) {
 
         <div class="container hero">
         	<div class="row">
-			<div class="col-12">
+			<div class="col-2">
 				<a href="schedule.php" role="button" class="btn btn-primary btn-dark" id="back">Back to Schedule</a>
+			</div>
+			<div class="col-2">
+				<a href="../social/my-friends.php" role="button" class="btn btn-primary btn-dark">Back to My Friends</a>
 			</div>
 		</div>
 
