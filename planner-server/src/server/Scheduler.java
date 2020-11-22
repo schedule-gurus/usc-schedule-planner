@@ -55,6 +55,7 @@ public class Scheduler {
     		Collections.sort(randSchedules, new DistComp());
     	}
 
+    	System.out.println("Returning " + ((metric) ? "RMP" : "Distance" ) + " optimal schedule...");
     	return randSchedules.get(0);
     }
     
