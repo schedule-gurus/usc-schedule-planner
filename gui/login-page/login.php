@@ -59,7 +59,9 @@ if(!isset($_SESSION["logged_in"]) || !$_SESSION["logged_in"]) {
             }
         }
     }
-} ?>
+} else {
+    header("Location: ../main/index.php");
+}?>
 
 
 <!DOCTYPE html>
