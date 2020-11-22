@@ -1,0 +1,39 @@
+#footer {
+	background-color: maroon;
+	padding:10px;
+	font-size:1.2em;
+	color:white;
+	/*margin-top:10px;*/
+	border-top:2px solid black;
+	/*position: absolute;
+	bottom: 0px;*/
+	width: 100%;
+	/*position:fixed;
+    bottom:0px;*/
+    
+}
+
+/*#navbar {
+	position: fixed;
+	top:0;
+}*/
+
+body, html {
+	margin:0px;
+	padding:0px;
+	height: 100%;
+	/*min-height: 125vh;*/
+	background-color: #EFEFEF;
+}
+
+body {
+	/*display: flex;
+	flex-direction: column;*/
+	/*min-height: calc(100vh - 400px);*/
+}
+/*.container {
+	height: 100%;
+	padding: 0px;
+	margin: 0px;
+}
+*/
