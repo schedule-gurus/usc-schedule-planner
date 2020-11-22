@@ -3,6 +3,14 @@
 require '../config/config.php';
 // error_reporting(E_ALL);
 
+if(!isset($_SESSION["logged_in"]) || !$_SESSION["logged_in"]) {
+
+} else {
+    header("Location: ../main/index.php");
+}
+
+
+
 ?>
 
 <!DOCTYPE html>
