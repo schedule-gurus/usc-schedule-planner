@@ -1,5 +1,5 @@
 <?php
-
+header("Access-Control-Allow-Origin: *");
 require '../config/config.php';
 // error_reporting(E_ALL);
 
@@ -23,16 +23,16 @@ require '../config/config.php';
     <link rel="stylesheet" href="../login-page/assets/css/styles.css">
     <link rel="stylesheet" href="../styles.css">
     <style>
-    	.form-register input {
-    		margin-top: 10px;
-    	}
-    	/*label {
-    		margin-top:10px;
-    		margin-left: 5px;
-    	}*/
-    	#inputMajorAbrv {
-    		margin-bottom: 10px;
-    	}
+        .form-register input {
+            margin-top: 10px;
+        }
+        /*label {
+            margin-top:10px;
+            margin-left: 5px;
+        }*/
+        #inputMajorAbrv {
+            margin-bottom: 10px;
+        }
         img {
             margin-right: auto;
             margin-left: auto;
@@ -140,7 +140,7 @@ require '../config/config.php';
                         <form class="form-register" id="classes" onsubmit="return isValidForm()" action="" method="">
                             <p id="ptag" style="color:black">Please enter the classes you want to take in the following format:<br> <em>Department Code-Course Number</em><br><em>Ex: CSCI-201</em></p>
                             <p id="ptag2" style="color:red"><em>Note: If logged in, this will automatically save your schedule. It is advised to delete your previous schedule before generating a new one.</em></p>
-                        	<input class="form-control" type="name" id="1" name="input1" placeholder="SOCI-200">
+                            <input class="form-control" type="name" id="1" name="input1" placeholder="SOCI-200">
                             <input class="form-control" type="name" id="2" name="input2" placeholder="EE-109">
                             <input class="form-control" type="name" id="3" name="input3" placeholder="CTAN-452">
                             <input class="form-control" type="name" id="4" name="input4" placeholder="ITP-303">
@@ -165,9 +165,6 @@ require '../config/config.php';
             </div>
         </div>
 
-        <div class="row" id="body">
-
-        </div>
 
     </div>
 
@@ -245,13 +242,14 @@ document.querySelector("#generate").onclick = function(event) {
     } else {
         // true is RMP
         // false is dist
+        document.getElementById('hid').classList.remove("hide");
         var rmp = document.getElementById("rmp").checked;
         console.log(rmp);
         var temp = 0;
         if(rmp) {
             temp = 1;
         }
-        var destination = "http://localhost:8080/SchedulingServlet?metric=" + temp + "&c0=" + list[0] + "&c1=" + list[1] + "&c2=" + list[2] + 
+        var destination = "http://localhost:8080/guru-server/SchedulingServlet?metric=" + temp + "&c0=" + list[0] + "&c1=" + list[1] + "&c2=" + list[2] + 
         "&c3=" + list[3] + "&c4=" + list[4] + "&c5=" + list[5];
         console.log(destination);
         ajax(destination, displayResults);
@@ -278,8 +276,30 @@ function ajax(urlParam, callBackFunction) {
 
 function displayResults(responseParam) {
 
-    <?php $_SESSION['classids'] = "<script>json.parse(responseParam)</script>";?> 
-    window.location.replace("generator-visualizer.php");
+    
+
+
+
+    let url = "generator-visualizer.php?len=";
+    var res = responseParam.match(/\d+/g).map(Number);
+    console.log(res);
+    url = url + res.length + "&list=";
+    for(let i = 0; i < res.length; i++) {
+        if(i + 1 == res.length) {
+            url = url + res[i];
+        } else {
+            url = url + res[i] + ",";
+        }
+    }
+
+    // for(let i = 0; i < res.length; i++) {
+    //     url = url + "&a[]" + "=" + res[i];
+        
+    // }
+    console.log(url);
+    window.location.replace(url);
+
+    
     
 }
 
