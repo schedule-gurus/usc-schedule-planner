@@ -2,7 +2,6 @@ package server;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
@@ -10,18 +9,11 @@ import javax.servlet.http.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import javax.servlet.*;
+import metrics.RMP;
+
 import java.sql.*;
-import java.io.*;
 import java.util.*;
 
-
-
-
-//import org.json.JSONArray;
-//import org.json.JSONException;
-////import org.json.JSONException;
-//import org.json.JSONObject;
 
 import models.Schedule;
 import models.Section;
@@ -31,8 +23,10 @@ import models.Section;
 @WebServlet("/SchedulingServlet")
 public class SchedulingServlet extends HttpServlet
 {
-	
-  protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+
+	private static final long serialVersionUID = 1L;
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException
 	{
 	  response.setHeader("Access-Control-Allow-Methods", "*");
@@ -124,13 +118,15 @@ public class SchedulingServlet extends HttpServlet
 
 			// get instructor data ready
 			int prof_id = 0;
+			//System.out.println("prof:");
 			if(currSection.instructors != null) {
 	      		String prof_first = currSection.instructors[0].first_name;
 	      		String prof_last = currSection.instructors[0].last_name;
-	      		double prof_rmp = currSection.instructors[0].rmp;
+	      		double prof_rmp = RMP.get_rmp(currSection.instructors[0]);
+	      		//System.out.println("profrmp" +  prof_rmp); 
 	      		
 	      		//initialize the connection
-	      		try
+	      		try 
 	      		{
 	      			Connection conn=DriverManager.getConnection(JdbcURL, Username, password); 
 	      			System.out.println("Yay!");

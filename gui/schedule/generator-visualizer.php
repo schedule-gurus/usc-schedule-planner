@@ -36,7 +36,7 @@
 	
 
 	$sql = "SELECT sections.ID, sections.session, sections.title, sections.type, sections.startTime, sections.endTime, 
-			CONCAT(instructors.first , ' ' , instructors.last) as instructor, sections.location, sections.dotw, sections.abrv FROM sections 
+			CONCAT(instructors.first , ' ' , instructors.last) as instructor, instructors.rmp, sections.location, sections.dotw, sections.abrv FROM sections 
 			LEFT JOIN instructors
 				ON sections.instructor = instructors.ID";
 
@@ -165,6 +165,7 @@
 							<th>Title</th>
 							<th>Type</th>
 							<th>Instructor</th>
+							<th>RMP</th>
 							<th>Start Time</th>
 							<th>End Time</th>
 							<th>Location</th>
@@ -192,6 +193,8 @@
 							<td>
 								<?php echo $row['instructor'];?>
 							</td>
+							<td>
+								<?php echo $row['rmp'];?>
 							<td>
 								<?php echo $row['startTime'];?>
 							</td>
