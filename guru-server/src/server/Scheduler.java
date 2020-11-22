@@ -13,10 +13,11 @@ public class Scheduler {
 
     private List<BitSet> schedules ;
     private List<List<Section>> successfulSchedules;                //0700->2200, M-F, 10 minute bins = 450 bins to represent the whole week\
+    private List<Section> quizzes = new ArrayList<Section>(); 		//We need a global sections so we can skip time checks
     
     public Scheduler() {
     	super();
-    	ClassDistance.initCoordinates("building_coordinates.txt"); //load the Class Distances
+    	ClassDistance.initCoordinates("/Users/niravadunuthula/repo/cs201/usc-schedule-planner/guru-server/src/building_coordinates.txt"); //load the Class Distances
     }
 
     //Input: Courses Strings wanted, number of schedules to compute RMP and DIST for, and metric to optimize.
@@ -56,7 +57,12 @@ public class Scheduler {
     	}
 
     	System.out.println("Returning " + ((metric) ? "RMP" : "Distance" ) + " optimal schedule...");
-    	return randSchedules.get(0);
+    	
+    	//need to add all the quiz sections
+    	Schedule bestSchedule = randSchedules.get(0);
+    	bestSchedule.sections.addAll(quizzes);
+    	
+    	return bestSchedule;
     }
     
     /*Schedule Comparators*/
@@ -107,7 +113,8 @@ public class Scheduler {
     	List<Section> lectures = new ArrayList<Section>();
     	List<Section> labs = new ArrayList<Section>();
     	List<Section> discussions = new ArrayList<Section>();
-    	Section quiz = null;
+    	
+    	boolean found_quiz = false;
     	
     	//get the different types of classes required for a course
     	for(Section s : courses[i].sections) {
@@ -120,9 +127,10 @@ public class Scheduler {
 			else if(s.type.equals("Dis")) {
 				discussions.add(s);
 			}
-			else if(s.type.contains("Qz")) {
-				//We want to ignore quizzes since they are sometimes scheduled at the same time
-				//quiz = s;
+			else if(s.type.contains("Qz") && !found_quiz) {
+				//We want to skip checks since they are sometimes scheduled at the same time
+				quizzes.add(s);
+				found_quiz = true;
 			}
 		}
     	
@@ -137,10 +145,6 @@ public class Scheduler {
             				sections.add(lectures.get(a));
             				sections.add(labs.get(b));
             				sections.add(discussions.get(c));
-            				
-            				if(quiz != null) {
-            					sections.add(quiz);
-            				}
             				
             				if(!hasCollision(sections)) {
             					courseSections.add(sections);
@@ -158,10 +162,6 @@ public class Scheduler {
         				sections.add(lectures.get(a));
         				sections.add(labs.get(b));
         				
-        				if(quiz != null) {
-        					sections.add(quiz);
-        				}
-        				
         				if(!hasCollision(sections)) {
         					courseSections.add(sections);
         				}
@@ -177,11 +177,7 @@ public class Scheduler {
         				
         				sections.add(lectures.get(a));
         				sections.add(discussions.get(b));
-        				
-        				if(quiz != null) {
-        					sections.add(quiz);
-        				}
-        				
+
         				if(!hasCollision(sections)) {
         					courseSections.add(sections);
         				}
@@ -194,11 +190,7 @@ public class Scheduler {
     				List<Section> sections = new ArrayList<Section>();
     				
     				sections.add(lectures.get(a));
-    				
-    				if(quiz != null) {
-    					sections.add(quiz);
-    				}
-    				
+
     				if(!hasCollision(sections)) {
     					courseSections.add(sections);
     				}
