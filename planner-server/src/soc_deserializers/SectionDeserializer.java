@@ -35,26 +35,30 @@ public class SectionDeserializer implements JsonDeserializer<Section> {
 		s.registered = sdata.get("number_registered").getAsInt();
 		
 		//handles an edge case of duplicate times and days + missing days
-		if(sdata.get("day").isJsonArray()) {
-			s.day = sdata.get("day").getAsJsonArray().get(0).getAsString();
-			s.start_time = timeStringToInt(sdata.get("start_time").getAsJsonArray().get(0).getAsString());
-			s.end_time = timeStringToInt(sdata.get("end_time").getAsJsonArray().get(0).getAsString());
-		}
-		else if(!sdata.get("day").isJsonObject()){
-			s.day = sdata.get("day").getAsString();
-			s.start_time = timeStringToInt(sdata.get("start_time").getAsString());
-			s.end_time = timeStringToInt(sdata.get("end_time").getAsString());
+		if(sdata.has("day")) {
+			if(sdata.get("day").isJsonArray()) {
+				s.day = sdata.get("day").getAsJsonArray().get(0).getAsString();
+				s.start_time = timeStringToInt(sdata.get("start_time").getAsJsonArray().get(0).getAsString());
+				s.end_time = timeStringToInt(sdata.get("end_time").getAsJsonArray().get(0).getAsString());
+			}
+			else if(!sdata.get("day").isJsonObject()){
+				s.day = sdata.get("day").getAsString();
+				s.start_time = timeStringToInt(sdata.get("start_time").getAsString());
+				s.end_time = timeStringToInt(sdata.get("end_time").getAsString());
+			}
 		}
 		
 		//handles edge case of missing locations
-		if(!sdata.get("location").isJsonObject()) {
-			if(sdata.get("location").isJsonArray()) {
-				s.location = sdata.get("location").getAsJsonArray().get(0).toString();
+		if(sdata.has("location")) {
+			if(!sdata.get("location").isJsonObject()) {
+				if(sdata.get("location").isJsonArray()) {
+					s.location = sdata.get("location").getAsJsonArray().get(0).toString();
+				}
+				else {
+					s.location = sdata.get("location").getAsString();
+				}
+				
 			}
-			else {
-				s.location = sdata.get("location").getAsString();
-			}
-			
 		}
 		
 		//if SectionData is a single section or a list of sections

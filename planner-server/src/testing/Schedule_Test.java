@@ -13,16 +13,11 @@ public class Schedule_Test {
     }
 	
 	 public void bestSchedule() throws Exception {
-	    	int sem_id = 20203;
-	        String[] courseStrings = {"csci-201", "ee-109", "csci-270", "hist-250"};
-	        Course[] courses = new Course[courseStrings.length];
-	        
-	        for(int i = 0; i < courseStrings.length; i++) {
-	        	courses[i] = SOC_API.get_course(courseStrings[i], sem_id);
-	        }
+	    	int sem_id = 20201;
+	        String[] courseNames = {"csci-201", "ee-109", "csci-270", "hist-250"};
 
 	        Scheduler s = new Scheduler();
-	        System.out.println(s.buildBestSchedule(courses, 10, true));
+	        System.out.println(s.buildBestSchedule(courseNames, sem_id, 10, true));
 
 	    }
 	

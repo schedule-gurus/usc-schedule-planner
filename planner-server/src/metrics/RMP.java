@@ -24,13 +24,20 @@ public class RMP {
 		int sum = 0;
 		int num_instructors = 0;
 		for(Section s : sections) {
-			for(Instructor i : s.instructors) {
-				sum += get_rmp(i);
-				num_instructors++;		
+			if(s.instructors != null) {
+				for(Instructor i : s.instructors) {
+					sum += get_rmp(i);
+					num_instructors++;		
+				}
 			}
 		}
 		
-		return (double)sum / num_instructors;
+		if(num_instructors != 0) {
+			return (double)sum / num_instructors;
+		}
+		else {
+			return -1;
+		}
 	}
 	
 	/*

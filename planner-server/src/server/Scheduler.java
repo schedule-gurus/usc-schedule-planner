@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import exceptions.CollisionException;
+import metrics.ClassDistance;
 import models.Binaryizer;
 import models.Course;
 import models.Schedule;
@@ -16,11 +17,21 @@ import java.util.Comparator;
 public class Scheduler {
 
     private List<BitSet> schedules ;
-    private List<List<Section>> successfulSchedules;                //0700->2200, M-F, 10 minute bins = 450 bins to represent the whole week
+    private List<List<Section>> successfulSchedules;                //0700->2200, M-F, 10 minute bins = 450 bins to represent the whole week\
+    
+    public Scheduler() {
+    	super();
+    	ClassDistance.initCoordinates("building_coordinates.txt"); //load the Class Distances
+    }
 
-    //Input: Courses wanted, number of schedules to compute RMP and DIST for, and metric to optimize.
+    //Input: Courses Strings wanted, number of schedules to compute RMP and DIST for, and metric to optimize.
     //Output: The best Schedule for the given metric.
-    public Schedule buildBestSchedule(Course[] courses, int schedulesDesired, boolean metric) throws Exception{
+    public Schedule buildBestSchedule(String[] courseNames, int sem_id, int schedulesDesired, boolean metric) throws Exception{
+    	
+    	Course[] courses = new Course[courseNames.length];
+    	for(int i = 0; i < courseNames.length; i++) {
+    		courses[i] = SOC_API.get_course(courseNames[i], sem_id);
+	    }
     	
     	buildValidSchedules(courses);
     	List<List<Section>> desiredSchedules = new ArrayList<List<Section>>(successfulSchedules);

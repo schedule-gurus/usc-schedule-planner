@@ -1,9 +1,5 @@
 package models;
 
-import com.google.gson.annotations.SerializedName;
-
-import metrics.RMP;
-
 public class Section {
 	public Integer id;
 	public Integer session; //what semester the class is held
