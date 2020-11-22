@@ -146,7 +146,7 @@ require '../config/config.php';
                             <input class="form-control" type="name" id="4" name="input4" placeholder="ITP-303">
                             <input class="form-control" type="name" id="5" name="input5" placeholder="CSCI-104">
                             <input class="form-control" type="name" id="6" name="input6" placeholder="MUSC-200">
-                            <label for="sort">Sort schedules by:</label> <br>
+                            <label for="sort">Optimize schedules by:</label> <br>
                             <input type="radio" id="rmp" class="rad" name="sort" checked='checked' value="rmp">Rate my Professor
                             <input type="radio" class="rad radr" name="sort" value="dist">Distance
 

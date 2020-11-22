@@ -123,73 +123,76 @@ public class SchedulingServlet extends HttpServlet
 			Section currSection = myClasses.sections.get(i);
 
 			// get instructor data ready
-      		String prof_first = currSection.instructors[0].first_name;
-      		String prof_last = currSection.instructors[0].last_name;
-      		double prof_rmp = currSection.instructors[0].rmp;
-      		
-      		String help = "INSERT INTO instructors (first, last, rmp) VALUES (?, ?, ?); ";
-      		try
-      		{
-      			Connection conn=DriverManager.getConnection(JdbcURL, Username, password); 
-      			System.out.println("Yay!");
-      		} catch(SQLException e) {
-      			System.out.println("Frick");
-      		}
-      		
-      		//check if the instructor exists
-      		int prof_id = 0;
-      		String sql1 = "SELECT ID FROM instructors WHERE first = ? AND last = ?;";
-      		try (Connection conn=DriverManager.getConnection(JdbcURL, Username, password); PreparedStatement ps = conn.prepareStatement(sql1);)
-      		{
-      			ps.setString(1, prof_first);
-      			ps.setString(2, prof_last);
-      			ResultSet rs = ps.executeQuery();
-      			
-      			rs.next();
-      			prof_id = rs.getInt("ID");
-      		}
-      		catch(SQLException e)
-      		{
-      			e.printStackTrace();
-      			System.out.println("Exception when getting instructorID");
-      		}
-
-      		if(prof_id == 0) {
-	      		// insert into instructors table
-	      		String sql2 = "INSERT IGNORE INTO instructors (first, last, rmp) VALUES (?, ?, ?); ";
-	      		try (Connection conn=DriverManager.getConnection(JdbcURL, Username, password); PreparedStatement ps = conn.prepareStatement(sql2);)
+			int prof_id = 0;
+			if(currSection.instructors != null) {
+	      		String prof_first = currSection.instructors[0].first_name;
+	      		String prof_last = currSection.instructors[0].last_name;
+	      		double prof_rmp = currSection.instructors[0].rmp;
+	      		
+	      		//initialize the connection
+	      		try
 	      		{
-	      			ps.setString(1, prof_first);
-	      			ps.setString(2, prof_last);
-	      			ps.setDouble(3, prof_rmp);
-	//      			ps.setString(4, prof_first);
-	//      			ps.setString(5, prof_last);
-	      			ps.execute();
+	      			Connection conn=DriverManager.getConnection(JdbcURL, Username, password); 
+	      			System.out.println("Yay!");
+	      		} catch(SQLException e) {
+	      			System.out.println("Frick");
 	      		}
-	      		catch(SQLException e)
-	      		{
-	      			e.printStackTrace();
-	      			System.out.println(prof_first + " " + prof_last);
-	      			System.out.println("Exception when inserting into instructors table");
-	      		}
-	
-	      		// get instructorID
-	      		String sql3 = "SELECT ID FROM instructors WHERE first = ? AND last = ?;";
-	      		try (Connection conn=DriverManager.getConnection(JdbcURL, Username, password); PreparedStatement ps = conn.prepareStatement(sql3);)
+	      		
+	      		//check if the instructor exists
+	      		String sql1 = "SELECT ID FROM instructors WHERE first = ? AND last = ?;";
+	      		try (Connection conn=DriverManager.getConnection(JdbcURL, Username, password); PreparedStatement ps = conn.prepareStatement(sql1);)
 	      		{
 	      			ps.setString(1, prof_first);
 	      			ps.setString(2, prof_last);
 	      			ResultSet rs = ps.executeQuery();
 	      			
-	      			rs.next();
-	      			prof_id = rs.getInt("ID");
+	      			if(rs.next()) {
+	      				prof_id = rs.getInt("ID");
+	      			}
 	      		}
 	      		catch(SQLException e)
 	      		{
 	      			e.printStackTrace();
 	      			System.out.println("Exception when getting instructorID");
 	      		}
-      		}
+	
+	      		if(prof_id == 0) {
+		      		// insert into instructors table
+		      		String sql2 = "INSERT IGNORE INTO instructors (first, last, rmp) VALUES (?, ?, ?); ";
+		      		try (Connection conn=DriverManager.getConnection(JdbcURL, Username, password); PreparedStatement ps = conn.prepareStatement(sql2);)
+		      		{
+		      			ps.setString(1, prof_first);
+		      			ps.setString(2, prof_last);
+		      			ps.setDouble(3, prof_rmp);
+		//      			ps.setString(4, prof_first);
+		//      			ps.setString(5, prof_last);
+		      			ps.execute();
+		      		}
+		      		catch(SQLException e)
+		      		{
+		      			e.printStackTrace();
+		      			System.out.println(prof_first + " " + prof_last);
+		      			System.out.println("Exception when inserting into instructors table");
+		      		}
+		
+		      		// get instructorID
+		      		String sql3 = "SELECT ID FROM instructors WHERE first = ? AND last = ?;";
+		      		try (Connection conn=DriverManager.getConnection(JdbcURL, Username, password); PreparedStatement ps = conn.prepareStatement(sql3);)
+		      		{
+		      			ps.setString(1, prof_first);
+		      			ps.setString(2, prof_last);
+		      			ResultSet rs = ps.executeQuery();
+		      			
+		      			rs.next();
+		      			prof_id = rs.getInt("ID");
+		      		}
+		      		catch(SQLException e)
+		      		{
+		      			e.printStackTrace();
+		      			System.out.println("Exception when getting instructorID");
+		      		}
+	      		}
+			}
 
       		// add section info into sections table
       		String sql = "INSERT IGNORE INTO sections ";

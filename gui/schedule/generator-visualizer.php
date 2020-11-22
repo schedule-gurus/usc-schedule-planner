@@ -159,6 +159,7 @@
 				<table class="table table-hover table-responsive-sm">
 					<thead>
 						<tr>
+                            <th>ID</th>
 							<th>DotW</th>
 							<th>Course Name</th>
 							<th>Title</th>
@@ -173,6 +174,9 @@
 					<tbody>
 						<?php while($row = $results->fetch_assoc()) : ?>
 						<tr>
+                            <td>
+                                <?php echo $row["ID"];?>
+                            </td>
 							<td>
 								<?php echo $row["dotw"];?>
 							</td>
