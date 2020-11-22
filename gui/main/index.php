@@ -62,16 +62,16 @@
 					<h3>Navigate to a Page:</h3>
 				</div>
                 <!-- <div class="col col-6 col-md-4 col-lg-3 p-2 text-center my-auto d-flex justify-content-center"> -->
-                <div class="col col-6 p-2 text-center my-auto">
+                <!-- <div class="col col-6 p-2 text-center my-auto"> -->
 
                 	<!-- <div class="col col-6 col-md-4 col-lg-3 p-2 text-center my-auto d-flex justify-content-center"> -->
-				<a href="../login-page/login.php"><button class="btn btn-lg btn-dark btn-primary">Log In</button></a>
-			</div>
-			<div class="col col-6 p-2 text-center my-auto">
-
-				<a href="../login-page/register.php"><button class="btn btn-lg btn-dark btn-primary">Sign Up</button></a>
+				<!-- <a href="../login-page/login.php"><button class="btn btn-lg btn-dark btn-primary">Log In</button></a> -->
 			<!-- </div> -->
-            </div>
+			<!-- <div class="col col-6 p-2 text-center my-auto"> -->
+
+				<!-- <a href="../login-page/register.php"><button class="btn btn-lg btn-dark btn-primary">Sign Up</button></a> -->
+			<!-- </div> -->
+            <!-- </div> -->
                 <!-- <div class="col col-6 col-md-4 col-lg-3 p-2 text-center my-auto d-flex justify-content-center"> -->
                 <div class="col col-6 p-2 text-center my-auto">
 
