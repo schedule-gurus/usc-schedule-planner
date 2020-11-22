@@ -29,6 +29,7 @@ public class Scheduler {
 	    }
     	
     	buildValidSchedules(courses);
+    	
     	List<List<Section>> desiredSchedules = new ArrayList<List<Section>>(successfulSchedules);
     	Collections.shuffle(desiredSchedules);
 
