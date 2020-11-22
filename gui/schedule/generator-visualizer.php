@@ -24,6 +24,16 @@
 	} else {
 		$logged_in = true;
 	}
+	if($logged_in) {
+		$sql_delete = "DELETE FROM enrolled
+		WHERE userID = " . $_SESSION['id'] . ";";
+		$r = $mysqli->query($sql_delete);
+		if ( !$r ) {
+			echo $mysqli->error;
+			exit();
+		}
+	}
+	
 
 	$sql = "SELECT sections.ID, sections.session, sections.title, sections.type, sections.startTime, sections.endTime, 
 			CONCAT(instructors.first , ' ' , instructors.last) as instructor, sections.location, sections.dotw, sections.abrv FROM sections 

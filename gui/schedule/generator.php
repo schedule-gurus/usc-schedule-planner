@@ -139,7 +139,7 @@ require '../config/config.php';
                         <p class="profile-name-card"> </p>
                         <form class="form-register" id="classes" onsubmit="return isValidForm()" action="" method="">
                             <p id="ptag" style="color:black">Please enter the classes you want to take in the following format:<br> <em>Department Code-Course Number</em><br><em>Ex: CSCI-201</em></p>
-                            <p id="ptag2" style="color:red"><em>Note: If logged in, this will automatically save your schedule. It is advised to delete your previous schedule before generating a new one.</em></p>
+                            <p id="ptag2" style="color:red"><em>Note: If logged in, this will automatically save your schedule and delete your previous one.</em></p>
                             <input class="form-control" type="name" id="1" name="input1" placeholder="SOCI-200">
                             <input class="form-control" type="name" id="2" name="input2" placeholder="EE-109">
                             <input class="form-control" type="name" id="3" name="input3" placeholder="CTAN-452">
