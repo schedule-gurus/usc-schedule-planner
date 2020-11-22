@@ -92,6 +92,7 @@ if ( !isset($_SESSION['logged_in']) || !$_SESSION['logged_in'] ) {
 				<table class="table table-hover table-responsive-sm">
 					<thead>
 						<tr>
+							<th>ID</th>
 							<th>DotW</th>
 							<th>Course Name</th>
 							<th>Title</th>
@@ -106,6 +107,9 @@ if ( !isset($_SESSION['logged_in']) || !$_SESSION['logged_in'] ) {
 					<tbody>
 						<?php while($row = $results->fetch_assoc()) : ?>
 						<tr>
+							<td>
+                                <?php echo $row["id"];?>
+                            </td>
 							<td>
 								<?php echo $row["dotw"];?>
 							</td>
