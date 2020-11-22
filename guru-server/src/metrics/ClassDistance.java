@@ -17,6 +17,7 @@ import com.google.gson.reflect.TypeToken;
 
 import models.Section;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -34,7 +35,8 @@ public class ClassDistance {
 		try {
 			cMap = gson.fromJson(new FileReader(path), addressMapType);
 		} catch (IOException e) {
-			System.out.println("IO Exception: " + e.getStackTrace());
+			System.out.println("Distance Error: ");
+			e.printStackTrace();
 		}
 	}
 	
@@ -175,6 +177,6 @@ public class ClassDistance {
 	
 //	Temporary main function to compute coordinates
 //	public static void main(String[] args) {
-//		ClassDistance.computeCoordinates("building_addresses.txt", "building_coordinates.txt");
+//		ClassDistance.computeCoordinates("guru-server/building_addresses.txt", "guru-server/building_coordinates.txt");
 //	}
 }

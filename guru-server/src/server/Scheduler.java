@@ -16,7 +16,7 @@ public class Scheduler {
     
     public Scheduler() {
     	super();
-    	ClassDistance.initCoordinates("building_coordinates.txt"); //load the Class Distances
+    	ClassDistance.initCoordinates("/Users/niravadunuthula/repo/cs201/usc-schedule-planner/guru-server/src/building_coordinates.txt"); //load the Class Distances
     }
 
     //Input: Courses Strings wanted, number of schedules to compute RMP and DIST for, and metric to optimize.
