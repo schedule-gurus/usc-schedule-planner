@@ -39,7 +39,7 @@ public class SchedulingServlet extends HttpServlet
       response.setHeader("Access-Control-Allow-Origin", "*");
       response.setHeader("Access-Control-Allow-Headers", "Content-Type");
 		// connect to database
-		String JdbcURL = "jdbc:mysql://303.itpwebdev.com:3306";
+		String JdbcURL = "jdbc:mysql://303.itpwebdev.com:3306/pluiz_usc_schedule_db";
         String Username = "pluiz_sachi";
         String password = "csci201final";
         
@@ -128,7 +128,7 @@ public class SchedulingServlet extends HttpServlet
       		double prof_rmp = currSection.instructors[0].rmp;
 
       		// insert into instructors table
-      		String sql2 = "INSERT into pluiz_usc_schedule_db.instructors (first, last, rmp) VALUES (?, ?, ?) ";
+      		String sql2 = "INSERT into instructors (first, last, rmp) VALUES (?, ?, ?); ";
       		try (Connection conn=DriverManager.getConnection(JdbcURL, Username, password); PreparedStatement ps = conn.prepareStatement(sql2);)
       		{
       			ps.setString(1, prof_first);
@@ -143,7 +143,7 @@ public class SchedulingServlet extends HttpServlet
 
       		// get instructorID
       		int prof_id = 0;
-      		String sql3 = "GET i.ID FROM pluiz_usc_schedule_db.instructors as i WHERE i.first = ? AND i.last = ? ";
+      		String sql3 = "GET ID FROM instructors WHERE first = ? AND last = ?; ";
       		try (Connection conn=DriverManager.getConnection(JdbcURL, Username, password); PreparedStatement ps = conn.prepareStatement(sql3);)
       		{
       			ps.setString(1, prof_first);
@@ -157,9 +157,9 @@ public class SchedulingServlet extends HttpServlet
       		}
 
       		// add section info into sections table
-      		String sql = "INSERT into pluiz_usc_schedule_db.sections ";
+      		String sql = "INSERT into sections ";
       		sql += "(ID, session, title, type, startTime, endTime, instructor, location, dotw, abrv) " ;
-      		sql += "VALUES (?,?,?,?,?,?,?,?,?,?) ";
+      		sql += "VALUES (?,?,?,?,?,?,?,?,?,?); ";
       		try (Connection conn=DriverManager.getConnection(JdbcURL, Username, password); PreparedStatement ps = conn.prepareStatement(sql);)
       		{
       			ps.setInt(1, currSection.id);
@@ -172,7 +172,7 @@ public class SchedulingServlet extends HttpServlet
       			ps.setString(8, currSection.location);
       			ps.setString(9, currSection.day);
       			ps.setString(10, currSection.course_name);
-
+      			ps.executeUpdate();
       		}	
       		catch(SQLException sqle)
       		{
