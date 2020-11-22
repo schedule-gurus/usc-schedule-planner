@@ -1,8 +1,5 @@
 package server;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import exceptions.CollisionException;
 import metrics.ClassDistance;
 import models.Binaryizer;
@@ -10,9 +7,7 @@ import models.Course;
 import models.Schedule;
 import models.Section;
 
-import java.util.BitSet;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.*;
 
 public class Scheduler {
 
@@ -36,20 +31,29 @@ public class Scheduler {
     	buildValidSchedules(courses);
     	List<List<Section>> desiredSchedules = new ArrayList<List<Section>>(successfulSchedules);
     	Collections.shuffle(desiredSchedules);
-    	
+
     	List<Schedule> randSchedules = new ArrayList<Schedule>();
+    	if (schedulesDesired ==1 ){
+			System.out.println("Generating " + schedulesDesired + " schedule...");
+		}
+		else{
+			System.out.println("Generating " + schedulesDesired + " schedules...");
+		}
     	for(int i = 0; i < schedulesDesired && i < desiredSchedules.size(); i++) {
+    		float tempPercent = (float) i / schedulesDesired ;
+			System.out.println(tempPercent*100 + "%");
     		randSchedules.add(new Schedule(desiredSchedules.get(i)));
     	}
-    	
-    	//metric - Rate By RMP, !metric - Distance
+		System.out.println(100 + "%" + "\nSchedule creation complete.");
+
+		//metric - Rate By RMP, !metric - Distance
     	if(metric) {
     		Collections.sort(randSchedules, new RMPComp());
     	}
     	else {
     		Collections.sort(randSchedules, new DistComp());
     	}
-    	
+
     	return randSchedules.get(0);
     }
     
