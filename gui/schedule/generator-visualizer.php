@@ -1,12 +1,16 @@
 <?php
 	require '../config/config.php';
-	var_dump($_SESSION);
-	var_dump($_SESSION['classids']);
+	// var_dump($_SESSION);
+	// var_dump($_GET);
 
-	if(!isset($_SESSION['classids']) || empty($_SESSION['classids'])) {
-		$error = "Error with storing info in session.";
-	}
-	else {
+	// $temp = json_decode($_GET);
+	// var_dump($temp);
+	// var_dump($_GET);
+
+	// if(!isset($_GET['c0']) || empty($_GET['c0'])) {
+	// 	$error = "Error with storing info in session.";
+	// }
+	// else {
 	$mysqli = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 	if($mysqli->connect_errno) {
 		echo $mysqli->connect_error;
@@ -29,21 +33,26 @@
 	$count = 0;
 	$enrolled_sql = "";
 
-	// foreach ($_SESSION['classids'] as $result){
-	// 	if($count == 0) {
-	// 		$sql = $sql . " WHERE sections.ID = " . $result;
-	// 		if($logged_in) {
-	// 			$enrolled_sql = "INSERT INTO enrolled(userID, sectionID) 
-	// 			VALUES(" . $_SESSION['id'] . ", " . $result . ")";
-	// 		}
-	// 		$count = $count + 1;
-	// 	} else {
-	// 		sql = $sql . " OR sections.ID = " . $result;
-	// 		if($logged_in) {
-	// 			$enrolled_sql = ", (" . $_SESSION['id'] . ", " . $result . ")";
-	// 		}
-	// 	}
-	// }
+	$list = explode(',', $_GET['list']);
+	// var_dump($list);
+
+
+	for ($i = 0; $i < $_GET['len']; $i++) {
+		// $str = "c" + $i;
+		if($i == 0) {
+			$sql = $sql . " WHERE sections.ID = " . $list[$i];
+			if($logged_in) {
+				$enrolled_sql = "INSERT INTO enrolled(userID, sectionID) 
+				VALUES(" . $_SESSION['id'] . ", " . $list[$i] . ")";
+			}
+		} else {
+			$sql = $sql . " OR sections.ID = " . $list[$i];
+			if($logged_in) {
+				$enrolled_sql = $enrolled_sql . ", (" . $_SESSION['id'] . ", " . $list[$i] . ")";
+			}
+		}
+
+	}
 
 	$sql = $sql . ";";
 
@@ -51,27 +60,31 @@
 		$enrolled_sql = $enrolled_sql . ";";
 	}
 
+	// var_dump($enrolled_sql);
+
+
 	$results = $mysqli->query($sql);
 	if ( !$results ) {
 		echo $mysqli->error;
 		exit();
 	}
+	// var_dump($results);
 
 	if(mysqli_num_rows($results) == 0) {
 		$error = "No classes found.";
 	}
 
-	// $enrolled_results = NULL;
-	// if($logged_in) {
-	// 	$enrolled_results = $mysqli->query($enrolled_results);
-	// 	if ( !$enrolled_results ) {
-	// 		echo $mysqli->error;
-	// 		exit();
-	// 	}
-	// }
+	$enrolled_results = NULL;
+	if($logged_in) {
+		$enrolled_results = $mysqli->query($enrolled_sql);
+		if ( !$enrolled_results ) {
+			echo $mysqli->error;
+			exit();
+		}
+	}
 
 	$mysqli->close();
-}
+// }
 ?>
 
 <!DOCTYPE html>
@@ -95,6 +108,9 @@
 		}
 		#back {
 			padding:10px;
+		}
+		.text-success, .text-danger {
+			text-align: center;
 		}
 	</style>
 </head>
