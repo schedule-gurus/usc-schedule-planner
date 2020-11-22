@@ -64,7 +64,7 @@
 
 	}
 
-	$sql = $sql . ";";
+	$sql = $sql . " ORDER BY abrv;";
 
 	if($logged_in) {
 		$enrolled_sql = $enrolled_sql . ";";

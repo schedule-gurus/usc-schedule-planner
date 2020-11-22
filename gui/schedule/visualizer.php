@@ -17,7 +17,8 @@ if ( !isset($_SESSION['logged_in']) || !$_SESSION['logged_in'] ) {
 			ON sections.ID = enrolled.sectionID
     	LEFT JOIN instructors
 			ON sections.instructor = instructors.ID 
-		WHERE " . $_GET['id'] . " = enrolled.userID AND enrolled.sectionID = sections.ID;";
+		WHERE " . $_GET['id'] . " = enrolled.userID AND enrolled.sectionID = sections.ID 
+		ORDER BY abrv;";
 	// var_dump($sql);
 	$results = $mysqli->query($sql);
 	if ( !$results ) {
