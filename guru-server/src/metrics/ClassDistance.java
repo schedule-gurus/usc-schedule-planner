@@ -30,10 +30,13 @@ public class ClassDistance {
 	
 	//Read in coordinates from file
 	public static void initCoordinates(String path) {
+		
 		Gson gson = new Gson();
 		Type addressMapType = new TypeToken<HashMap<String, JOpenCageLatLng>>() {}.getType();
 		try {
-			cMap = gson.fromJson(new FileReader(path), addressMapType);
+			cMap = gson.fromJson(new FileReader(ClassDistance.class.getClassLoader()
+												.getResource(path).getPath()
+												.replaceAll("%20", " ")), addressMapType);
 		} catch (IOException e) {
 			System.out.println("Distance Error: ");
 			e.printStackTrace();

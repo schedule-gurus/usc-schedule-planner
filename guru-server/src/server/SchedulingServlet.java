@@ -49,7 +49,7 @@ public class SchedulingServlet extends HttpServlet
         String c5 = request.getParameter("c5");
         boolean valforopt;
         if(metric == null) {
-        	System.out.println("metric null");
+        	System.out.println("==== Servlet Start Up ====");
         	return;
         }
         if(metric.compareTo("1") == 0)
@@ -105,9 +105,8 @@ public class SchedulingServlet extends HttpServlet
         Scheduler scheduler = new Scheduler();
       	Schedule myClasses = null;
 		try {
-			myClasses = scheduler.buildBestSchedule(courseNames, 20203, 1, valforopt);
+			myClasses = scheduler.buildBestSchedule(courseNames, 20203, 10, valforopt);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -123,15 +122,14 @@ public class SchedulingServlet extends HttpServlet
 	      		String prof_first = currSection.instructors[0].first_name;
 	      		String prof_last = currSection.instructors[0].last_name;
 	      		double prof_rmp = RMP.get_rmp(currSection.instructors[0]);
-	      		//System.out.println("profrmp" +  prof_rmp); 
 	      		
 	      		//initialize the connection
 	      		try 
 	      		{
 	      			Connection conn=DriverManager.getConnection(JdbcURL, Username, password); 
-	      			System.out.println("Yay!");
+	      			System.out.println("Database Connection Successful!");
 	      		} catch(SQLException e) {
-	      			System.out.println("Frick");
+	      			System.out.println("Initital Driver Connection...");
 	      		}
 	      		
 	      		//check if the instructor exists
@@ -160,8 +158,6 @@ public class SchedulingServlet extends HttpServlet
 		      			ps.setString(1, prof_first);
 		      			ps.setString(2, prof_last);
 		      			ps.setDouble(3, prof_rmp);
-		//      			ps.setString(4, prof_first);
-		//      			ps.setString(5, prof_last);
 		      			ps.execute();
 		      		}
 		      		catch(SQLException e)
@@ -215,70 +211,26 @@ public class SchedulingServlet extends HttpServlet
       		}		
       	}
 
-      	// get classIDs
-      	// just loop through myClasses and get each entry's .id Integer
-
-
-      	// save classIDs as JSON, then send back out. done below:
-
-
-
-        // This is an example of using putting an array of ints into a JSON, and it worked :)
-	/*
-	Integer[] test = new Integer[5];
-	    for(int i = 0; i < 5; i++)
-	    {
-	    	test[i] = i;
-	    }
-	    //test[0] = 1;
-	    //creates JSON object that will be put into the JSON array
-	    JSONObject jo = new JSONObject();
-    	
-    	//populates JSON object with course IDs
-    	for(int i = 0; i < test.length; i++)
-    	{
-    		//jo.put("courseID", test[i]);
-    		jo.append("courseID", test[i]);
-    	}
-    	//creates JSON array that will be populated with JSON object that represents a user's class IDs
-    	JSONArray ja = new JSONArray();
-    	//populates JSON object with user's packaged class IDs
-    	ja.put(jo);
-    	
-    	//prints out json object within the json array we're passing pilar
-    	for (int i = 0; i < ja.length(); i++)
-    	{
-    	    JSONObject pet = ja.getJSONObject(i);
-    	    System.out.println(pet);
-    	}
-      */
 
         Gson jo = new GsonBuilder().setPrettyPrinting().create();
-//        JSONArray ja = new JSONArray();
         int[] ja = new int[myClasses.sections.size()];
         for(int i = 0; i < myClasses.sections.size(); i++)
         {
 	          int currid = myClasses.sections.get(i).id;
 	          ja[i] = currid;
-//	          try {
-////				jo.append("classIDs", currid);
-//	        	  ja
-//			} catch (JSONException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
+
         }
-//        ja.put(jo);
         String json = jo.toJson(ja);
-        
-//        response.setHeader("Access-Control-Allow-Origin", "http://localhost:8888");
-//        response.setHeader("Access-Control-Allow-Methods", "GET");
-        
+        if(json == "[]") {
+        	json = "{}";
+        }
+
         PrintWriter out = response.getWriter();
         response.setContentType("application/json");
         out.println(json);
         out.flush();
-	    
+        
+        System.out.println("Schedule Returned!");
     
     }
 

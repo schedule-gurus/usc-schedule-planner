@@ -10,11 +10,19 @@ import server.SOC_API;
 
 public class SOC_Test {
 	
+	public static void main(String[] args) {
+		try {
+			SOC_Test s = new SOC_Test();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public SOC_Test() throws IOException {
 		checkCourse();
-		//checkCourseHelpers();
-		//checkInstructor();
-		//checkDistance();
+		checkCourseHelpers();
+		checkInstructor();
+		checkDistance();
 		
 	}
 	
@@ -30,11 +38,7 @@ public class SOC_Test {
 		}
 		System.out.println();
 	}
-	
-	private void checkSection() throws IOException {
-		//check get_department
-		//Department d = SOC_API.get_section()
-	}
+
 	
 	private void checkInstructor() throws IOException {
 		//check get_section - CS 201 Fall 2020 

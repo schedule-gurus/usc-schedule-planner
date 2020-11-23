@@ -46,7 +46,7 @@ public class RMP {
 	 */
 	public static double get_rmp(Instructor i) {
 		
-		String n = i.first_name.trim() + "+" + i.last_name.trim();
+		String n = i.first_name.trim().replaceAll(" ", "") + "+" + i.last_name.trim().replaceAll(" ", "");
 		
 		URL rmp_request;
 		try {
@@ -103,7 +103,7 @@ public class RMP {
 //			n = name;
 //		}
 		
-		String n = fname.trim() + "+" + lname.trim();
+		String n = fname.trim().replaceAll(" ", "") + "+" + lname.trim().replaceAll(" ", "");
 
 		URL rmp_request;
 		try {

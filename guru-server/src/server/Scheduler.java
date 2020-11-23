@@ -7,6 +7,9 @@ import models.Course;
 import models.Schedule;
 import models.Section;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class Scheduler {
@@ -17,7 +20,8 @@ public class Scheduler {
     
     public Scheduler() {
     	super();
-    	ClassDistance.initCoordinates("/Users/niravadunuthula/repo/cs201/usc-schedule-planner/guru-server/src/building_coordinates.txt"); //load the Class Distances
+    	// writes all files of the current directory
+    	ClassDistance.initCoordinates("building_coordinates.txt"); //load the Class Distances
     }
 
     //Input: Courses Strings wanted, number of schedules to compute RMP and DIST for, and metric to optimize.
@@ -33,17 +37,30 @@ public class Scheduler {
     		courses[i] = SOC_API.get_course(dupeless[i], sem_id);
 	    }
     	
-    	buildValidSchedules(courses);
+    	//remove null values
+    	int count = 0;
+    	for(int i = 0; i < dupeless.length; i++) {
+    		if(courses[i] == null) {
+    			count++;
+    			for(int j = i; j < dupeless.length-1; j++) {
+    				courses[i] = courses[i+1];
+    			}
+    		}
+	    }
+    	Course[] nulless = new Course[courses.length - count];
+    	System.arraycopy(courses, 0, nulless, 0, courses.length - count);
+    	
+    	buildValidSchedules(nulless);
     	
     	List<List<Section>> desiredSchedules = new ArrayList<List<Section>>(successfulSchedules);
     	Collections.shuffle(desiredSchedules);
 
     	List<Schedule> randSchedules = new ArrayList<Schedule>();
     	if (schedulesDesired ==1 ){
-			System.out.println("Generating " + schedulesDesired + " schedule...");
+			System.out.println("Optimizing on " + schedulesDesired + " schedule...");
 		}
 		else{
-			System.out.println("Generating " + schedulesDesired + " schedules...");
+			System.out.println("Optimizing on " + schedulesDesired + " schedules...");
 		}
     	for(int i = 0; i < schedulesDesired && i < desiredSchedules.size(); i++) {
     		float tempPercent = (float) i / schedulesDesired ;

@@ -19,5 +19,13 @@ public class Tests {
 			e.printStackTrace();
 		}
 		
+		//Schedule
+		try {
+			Connection_Test ct = new Connection_Test();
+		} catch (Exception e) {
+			System.out.println("Failed Connection_Test");
+			e.printStackTrace();
+		}
+		
 	}
 }

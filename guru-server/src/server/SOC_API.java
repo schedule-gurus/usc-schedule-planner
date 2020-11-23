@@ -8,7 +8,9 @@ import java.net.URL;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
 
+import exceptions.NotFoundException;
 import models.*;
 import soc_deserializers.DepartmentDeserializer;
 
@@ -22,6 +24,10 @@ public class SOC_API{
 	 */
 	public static Section get_section(String course_id, int section_id, int semester_id) throws IOException {
 		Course c = get_course(course_id, semester_id);
+		
+		if(c == null) {
+			return null;
+		}
 		
 		for(Section s : c.sections) {
 			if(s.id == section_id) {
@@ -50,6 +56,11 @@ public class SOC_API{
 		
 		//get department
 		Course[] dpt_courses = get_department_courses(course_info[0], semester_id);
+		
+		if(dpt_courses == null) {
+			return null;
+		}
+		
 		for(Course c : dpt_courses){
 			if(c.id == Integer.parseInt(course_info[1])) {
 				return c;
@@ -78,11 +89,19 @@ public class SOC_API{
 		System.out.println("GET Response Code :: " + responseCode);
 		
 		if (responseCode == HttpURLConnection.HTTP_OK) { // success
+
 			BufferedReader in = new BufferedReader(new InputStreamReader(
 					con.getInputStream()));
 			
 			Gson g = new GsonBuilder().registerTypeAdapter(Department.class, new DepartmentDeserializer()).create();
-			return g.fromJson(in, Department.class);
+			
+			try {
+				return g.fromJson(in, Department.class);
+			} catch (JsonSyntaxException e) {
+				System.out.println("Invalid Course Name entered.");
+				//throw new NotFoundException("Course " + department_id + " entered by user not found.");
+				return null;
+			}
 		} else {
 			System.out.println("GET request failed");
 			return null;
