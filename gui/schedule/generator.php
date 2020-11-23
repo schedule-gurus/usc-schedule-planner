@@ -281,15 +281,19 @@ function displayResults(responseParam) {
 
 
     let url = "generator-visualizer.php?len=";
-    var res = responseParam.match(/\d+/g).map(Number);
-    console.log(res);
-    url = url + res.length + "&list=";
-    for(let i = 0; i < res.length; i++) {
-        if(i + 1 == res.length) {
-            url = url + res[i];
-        } else {
-            url = url + res[i] + ",";
+    try {
+        var res = responseParam.match(/\d+/g).map(Number);
+        console.log(res);
+        url = url + res.length + "&list=";
+        for(let i = 0; i < res.length; i++) {
+            if(i + 1 == res.length) {
+                url = url + res[i];
+            } else {
+                url = url + res[i] + ",";
+            }
         }
+    } catch(err) {
+        url = "generator-visualizer.php?len=0&list=";
     }
 
     // for(let i = 0; i < res.length; i++) {
