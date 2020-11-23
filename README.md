@@ -4,6 +4,7 @@ The main repository for our 201 project, SChedule Gurus. Please use branches to 
 USC CSCI 201 Fall 2020 Final Project: Schedule Gurus
 
 Nirav Adunuthula, Jaehyung Choi, Sachi Desale, Camden Jones, Kevin Lee, Pilar Luiz
+November 23, 2020
 
 The main functionality of our program is to allow users to:
 - sign up and login in
