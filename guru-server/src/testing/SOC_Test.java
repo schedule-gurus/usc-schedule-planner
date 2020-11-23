@@ -11,17 +11,17 @@ import server.SOC_API;
 public class SOC_Test {
 	
 	public SOC_Test() throws IOException {
-		//checkCourse();
+		checkCourse();
 		//checkCourseHelpers();
-		checkInstructor();
-		checkDistance();
+		//checkInstructor();
+		//checkDistance();
 		
 	}
 	
 	private void checkCourse() throws IOException {
 		//check get_department
-		Department d = SOC_API.get_department("csci", 20201);
-		Course c1 = d.courses[0];
+		Course c1 = SOC_API.get_course("csci-350", 20201);
+		//Course c1 = d.courses[0];
 		
 		for(Section s : c1.sections) {
 			System.out.println(c1.department+"-"+c1.id.toString() + " " + s.id + " " + 
@@ -29,6 +29,11 @@ public class SOC_Test {
 					s.day + " "+ s.units); 
 		}
 		System.out.println();
+	}
+	
+	private void checkSection() throws IOException {
+		//check get_department
+		//Department d = SOC_API.get_section()
 	}
 	
 	private void checkInstructor() throws IOException {

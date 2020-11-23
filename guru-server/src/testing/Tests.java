@@ -3,13 +3,13 @@ package testing;
 public class Tests {
 	public static void main(String[] args) {
 		
-//		//SOC
-//		try {
-//			SOC_Test soc = new SOC_Test();
-//		} catch (Exception e) {
-//			System.out.println("Failed SOC_Test");
-//			e.printStackTrace();
-//		}
+		//SOC
+		try {
+			SOC_Test soc = new SOC_Test();
+		} catch (Exception e) {
+			System.out.println("Failed SOC_Test");
+			e.printStackTrace();
+		}
 		
 		//Schedule
 		try {

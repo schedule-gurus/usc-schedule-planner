@@ -48,6 +48,12 @@ public class SectionDeserializer implements JsonDeserializer<Section> {
 			}
 		}
 		
+		//handles quiz sections which don't have times
+		if(s.start_time == null || s.end_time == null) {
+			s.start_time = 0;
+			s.end_time = 0;
+		}
+		
 		//handles edge case of missing locations
 		if(sdata.has("location")) {
 			if(!sdata.get("location").isJsonObject()) {
