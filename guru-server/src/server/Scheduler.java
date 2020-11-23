@@ -24,9 +24,13 @@ public class Scheduler {
     //Output: The best Schedule for the given metric.
     public Schedule buildBestSchedule(String[] courseNames, int sem_id, int schedulesDesired, boolean metric) throws Exception{
     	
-    	Course[] courses = new Course[courseNames.length];
-    	for(int i = 0; i < courseNames.length; i++) {
-    		courses[i] = SOC_API.get_course(courseNames[i], sem_id);
+    	//remove duplicates
+    	Set<String> dupes = new HashSet<String>(Arrays.asList(courseNames));
+    	String[] dupeless = dupes.toArray(new String[dupes.size()]);
+    	
+    	Course[] courses = new Course[dupeless.length];
+    	for(int i = 0; i < dupeless.length; i++) {
+    		courses[i] = SOC_API.get_course(dupeless[i], sem_id);
 	    }
     	
     	buildValidSchedules(courses);
