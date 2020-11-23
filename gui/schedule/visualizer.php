@@ -1,9 +1,11 @@
 <?php
 require '../config/config.php';
 // if you're not logged in
+$logged_in = false;
 if ( !isset($_SESSION['logged_in']) || !$_SESSION['logged_in'] ) {
 	$error = "You cannot visualize saved schedules if you're not logged in.";
 } else {
+	$logged_in = true;
 	$mysqli = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 	if($mysqli->connect_errno) {
 		echo $mysqli->connect_error;
@@ -56,6 +58,8 @@ if ( !isset($_SESSION['logged_in']) || !$_SESSION['logged_in'] ) {
             text-align: center;
         }
 
+        
+
 	</style>
 </head>
 <body>
@@ -72,9 +76,11 @@ if ( !isset($_SESSION['logged_in']) || !$_SESSION['logged_in'] ) {
 			<div class="col-2">
 				<a href="schedule.php" role="button" class="btn btn-primary btn-dark" id="back">Back to Schedule</a>
 			</div>
+			<?php if ($logged_in) : ?>
 			<div class="col-2">
-				<a href="../social/my-friends.php" role="button" class="btn btn-primary btn-dark">Back to My Friends</a>
+				<a href="../social/my-friends.php" role="button" class="btn btn-primary btn-dark hide" id="friends">Back to Friends</a>
 			</div>
+			<?php endif; ?>
 		</div>
 
 		<div class="row">
