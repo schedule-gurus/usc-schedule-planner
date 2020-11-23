@@ -23,6 +23,7 @@ The main files for these can be viewed in guru-server/src.
 IMPORTANT NOTES:
 
 Ignore the WebContent/META-INF folder. 
+
 The GUI folder contains the PHP files, but you do not need to run any of those files. 
 The reason for this is that our frontend is hosted on the USC ITP server. 
 The guru-server contains the code for the backend.
