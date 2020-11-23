@@ -135,6 +135,7 @@ else {
 			<!-- TODO: Update links -->
 			<a href="../login-page/login.php" role="button" class="btn btn-primary btn-dark back" id="back">To Login Page</a>
 			<a href="register.php" role="button" class="btn btn-primary btn-dark back">Back to Sign Up</a>
+			<a href="../main/index.php" role="button" class="btn btn-primary btn-dark back">To Main</a>
 		</div>
 
 
