@@ -12,7 +12,7 @@ if ( !isset($_SESSION['logged_in']) || !$_SESSION['logged_in'] ) {
 	$mysqli->set_charset('utf8');
 
 	$sql = "SELECT enrolled.sectionID as id, sections.session as session, sections.title as title, 
-		sections.type as type, sections.startTime as start, sections.endTime as end, CONCAT(instructors.first , ' ' , instructors.last) as instructor, sections.location as location, sections.dotw as dotw, sections.abrv as abrv FROM enrolled 
+		sections.type as type, sections.startTime as start, sections.endTime as end, CONCAT(instructors.first , ' ' , instructors.last) as instructor, instructors.rmp as rmp, sections.location as location, sections.dotw as dotw, sections.abrv as abrv FROM enrolled 
 		LEFT JOIN sections
 			ON sections.ID = enrolled.sectionID
     	LEFT JOIN instructors
@@ -102,6 +102,7 @@ if ( !isset($_SESSION['logged_in']) || !$_SESSION['logged_in'] ) {
 							<th>Title</th>
 							<th>Type</th>
 							<th>Instructor</th>
+							<th>RMP</th>
 							<th>Start Time</th>
 							<th>End Time</th>
 							<th>Location</th>
@@ -130,6 +131,8 @@ if ( !isset($_SESSION['logged_in']) || !$_SESSION['logged_in'] ) {
 							<td>
 								<?php echo $row['instructor'];?>
 							</td>
+							<td>
+								<?php echo $row['rmp'];?>
 							<td>
 								<?php echo $row['start'];?>
 							</td>
