@@ -34,6 +34,10 @@
 		}
 	}
 	
+	if(empty($_GET['list'])) {
+		$error = "Couldn't find classes";
+	} else {
+
 
 	$sql = "SELECT sections.ID, sections.session, sections.title, sections.type, sections.startTime, sections.endTime, 
 			CONCAT(instructors.first , ' ' , instructors.last) as instructor, instructors.rmp, sections.location, sections.dotw, sections.abrv FROM sections 
@@ -92,6 +96,7 @@
 			exit();
 		}
 	}
+}
 
 	$mysqli->close();
 // }
