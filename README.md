@@ -8,6 +8,8 @@ Nirav Adunuthula, Jaehyung Choi, Sachi Desale, Camden Jones, Kevin Lee, Pilar Lu
 
 November 23, 2020
 
+=========================================
+
 The main functionality of our program is to allow users to:
 
 - sign up and login in
@@ -23,7 +25,7 @@ The main files for these can be viewed in guru-server/src.
 
 =========================================
 
-IMPORTANT NOTES:
+<h5>IMPORTANT NOTES:</h5>
 
 Ignore the WebContent/META-INF folder. 
 
@@ -36,7 +38,7 @@ To run the program, follow this [Deployment Document](https://docs.google.com/do
 The front end is hosted at: 303.itpwebdev.com/~pluiz/gui/main
 
 =========================================
-Notes for interpreting front end:
+<h5>Notes for interpreting front end:</h5>
 
 -1 RMP values mean that instructor's Rate My Professor score could not be found.
 
