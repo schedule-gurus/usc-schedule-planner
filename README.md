@@ -1,4 +1,5 @@
 # usc-schedule-planner
+<h1>Schedule Gurus</h1>
 The main repository for our 201 project, SChedule Gurus. Please use branches to edit and merge with master/main.
 
 USC CSCI 201 Fall 2020 Final Project: Schedule Gurus
