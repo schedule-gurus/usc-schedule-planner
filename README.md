@@ -1,5 +1,5 @@
 # usc-schedule-planner
-<h1>Schedule Gurus</h1>
+<h1>SChedule Gurus</h1>
 The main repository for our 201 project, SChedule Gurus. Please use branches to edit and merge with master/main.
 
 USC CSCI 201 Fall 2020 Final Project: Schedule Gurus
@@ -35,7 +35,7 @@ To run the program, follow this [Deployment Document](https://docs.google.com/do
 
 The front end is hosted at: 303.itpwebdev.com/~pluiz/gui/main
 
-
+=========================================
 Notes for interpreting front end:
 
 -1 RMP values mean that instructor's Rate My Professor score could not be found.
