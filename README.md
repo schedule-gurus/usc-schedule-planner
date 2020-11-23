@@ -27,7 +27,7 @@ The main files for these can be viewed in guru-server/src.
 
 =========================================
 
-<h3>IMPORTANT NOTES:</h3>
+<h2>IMPORTANT NOTES:</h2>
 
 Ignore the WebContent/META-INF folder. 
 
@@ -40,7 +40,7 @@ To run the program, follow this [Deployment Document](https://docs.google.com/do
 The front end is hosted at: 303.itpwebdev.com/~pluiz/gui/main
 
 =========================================
-<h3>Notes for interpreting front end:</h3>
+<h2>Notes for interpreting front end:</h2>
 
 -1 RMP values mean that instructor's Rate My Professor score could not be found.
 
