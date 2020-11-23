@@ -20,6 +20,8 @@ The gui folder has all our PHP files for the frontend.
 The guru-server folder has the Schedule of Classes API, RMP API, Algorithm, and Servlet, along with some testing code. 
 The main files for these can be viewed in guru-server/src.
 
+=========================================
+
 IMPORTANT NOTES:
 
 Ignore the WebContent/META-INF folder. 
